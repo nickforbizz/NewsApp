@@ -4,7 +4,7 @@
 #### Tasks
 - [x] Adding Navigation
 - [x] Navhost and NavController
-- [] Adding Data to Top News Screen
+- [x] Adding Data to Top News Screen
 - [] Navigate with argument
 - [] Displaying News details
 - [] Adding AppBar and formatting date in time logo
