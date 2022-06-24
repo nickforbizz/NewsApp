@@ -3,7 +3,7 @@
 ### UI
 #### Tasks
 - [x] Adding Navigation
-- [] Navhost and NavController
+- [x] Navhost and NavController
 - [] Adding Data to Top News Screen
 - [] Navigate with argument
 - [] Displaying News details
