@@ -3,6 +3,7 @@ package com.example.newsapp.ui.screen
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,7 +32,9 @@ fun TopNews(navController: NavController){
 
         LazyColumn{
             items(MockData.topNewsList){
-                item -> TopNewsItem(newsdata = item)  
+                item -> TopNewsItem(newsdata = item, onNewsClick = {
+                    navController.navigate("DetailScreen/${item.id}")
+            })
             }
         }
     }
@@ -40,11 +43,14 @@ fun TopNews(navController: NavController){
 
 
 @Composable
-fun TopNewsItem(newsdata: NewsData){
+fun TopNewsItem(newsdata: NewsData, onNewsClick: ()->Unit ={}){
 
     Box(modifier = Modifier
         .height(200.dp)
-        .padding(8.dp)){
+        .padding(8.dp)
+        .clickable {
+            onNewsClick()
+        }){
         Image(painter = painterResource(id = newsdata.image),
             contentDescription = "",
             contentScale = ContentScale.FillBounds)

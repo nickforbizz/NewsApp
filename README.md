@@ -5,7 +5,7 @@
 - [x] Adding Navigation
 - [x] Navhost and NavController
 - [x] Adding Data to Top News Screen
-- [] Navigate with argument
+- [x] Navigate with argument
 - [] Displaying News details
 - [] Adding AppBar and formatting date in time logo
 - [] Understanding bottom bar navigation
