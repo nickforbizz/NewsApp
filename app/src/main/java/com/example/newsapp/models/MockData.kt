@@ -17,7 +17,10 @@ object MockData {
             R.drawable.namita,
             author = "Namita Singh",
             title = "Cleo Smith news — live: Kidnap suspect 'in hospital again' as 'hard police grind' credited for breakthrough - The Independent",
-            description = "The suspected kidnapper of four-year-old Cleo Smith has been treated in hospital for a second time amid reports he was “attacked” while in custody.",
+            description = "The suspected kidnapper of four-year-old Cleo Smith has been treated in hospital " +
+                    "for a second time amid reports he was “attacked” while in custody.  " +
+                    "The European Parliament's first official delegation to Taiwan said on Thursday the diplomatically isolated island is " +
+                    "not alone and called for bolder actions to strengthen EU-Taiwan ties as Taipei faces rising pressure from Beijing.",
             publishedAt = "2021-11-04T04:42:40Z"
         ),
         NewsData(
@@ -26,7 +29,8 @@ object MockData {
             author = "Not available",
             title = "'You are not alone': EU Parliament delegation tells Taiwan on first official visit - Reuters",
             description =
-            "The European Parliament's first official delegation to Taiwan said on Thursday the diplomatically isolated island is not alone and called for bolder actions to strengthen EU-Taiwan ties as Taipei faces rising pressure from Beijing.",
+            "The European Parliament's first official delegation to Taiwan said on Thursday the diplomatically isolated " +
+                    "island is not alone and called for bolder actions to strengthen EU-Taiwan ties as Taipei faces rising pressure from Beijing.",
             publishedAt = "2021-11-04T03:37:00Z"
         ),
         NewsData(
