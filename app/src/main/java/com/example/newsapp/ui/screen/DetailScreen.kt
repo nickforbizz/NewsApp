@@ -7,11 +7,9 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -27,51 +25,72 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.R
+import com.example.newsapp.models.MockData
+import com.example.newsapp.models.MockData.getTimeAgo
 import com.example.newsapp.models.NewsData
 
 @Composable
 fun DetailScreen(navController: NavController, newsData: NewsData, scrollState: ScrollState){
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(15.dp)
-        .verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Details Screen", fontWeight = FontWeight.SemiBold)
-        
-        
-        Image(painter = painterResource(id = newsData.image), contentDescription = "")
-        
-        Row(modifier = Modifier
+    
+    
+    Scaffold(topBar = {
+        DetailTopAppBar(onBackPressed = {navController.popBackStack()})
+    }) {
+        Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            infoWithIcon(Icons.Default.Edit, newsData.author)
-            infoWithIcon(Icons.Default.DateRange, newsData.publishedAt)
-            
-        }
-        
-        Text(text = newsData.title, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
-        Text(text = newsData.description, modifier = Modifier.padding(top = 15.dp, bottom = 5.dp))
+            .padding(15.dp)
+            .verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
+//            Text(text = "Details Screen", fontWeight = FontWeight.SemiBold)
 
-        Divider(
-            color = Color.Gray,
-            modifier = Modifier
+
+            Image(painter = painterResource(id = newsData.image), contentDescription = "")
+
+            Row(modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp),
-            thickness = 1.dp
-        )
-        
-        Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()){
-            Button(onClick = {
-                //navController.navigate("TopNews")
-                navController.popBackStack()
-            }) {
-                Text(text = "Go Back")
-            }
-        }
+                .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                infoWithIcon(Icons.Default.Edit, newsData.author)
+                infoWithIcon(Icons.Default.DateRange, info =  MockData.stringToDate(newsData.publishedAt).getTimeAgo())
 
+            }
+
+            Text(text = newsData.title, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
+            Text(text = newsData.description, modifier = Modifier.padding(top = 15.dp, bottom = 5.dp))
+
+            Divider(
+                color = Color.Gray,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp),
+                thickness = 1.dp
+            )
+
+            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.fillMaxWidth()){
+                Button(onClick = {
+                    //navController.navigate("TopNews")
+                    navController.popBackStack()
+                }) {
+
+                    Text(text = "Go Back")
+                }
+            }
+
+        }
     }
+
 }
 
 
+
+@Composable
+fun DetailTopAppBar(onBackPressed: ()->Unit = {}){
+    TopAppBar(title = {
+        Text(text = "Detail Screen", fontWeight = FontWeight.SemiBold) },
+        navigationIcon = {
+            IconButton(onClick = { onBackPressed() }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "")
+            }
+        })
+}
 
 @Composable
 fun infoWithIcon(icon: ImageVector, info: String){
