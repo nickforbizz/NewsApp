@@ -1,6 +1,10 @@
 package com.example.newsapp.models
 
+import android.icu.text.SimpleDateFormat
+import android.os.Build
+import android.util.Log
 import com.example.newsapp.R
+import java.util.*
 
 object MockData {
 
@@ -47,14 +51,14 @@ object MockData {
             author = "Grant Brisbee",
             title = "Buster Posey's career was like no other in Giants history - The Athletic",
             description = "There was a franchise without Buster Posey, and there was one with him, and those two franchises were radically, impossibly different.",
-            publishedAt = "2021-11-04T02:12:54Z"
+            publishedAt = "2022-07-04T02:12:54Z"
         ),
         NewsData(
             6,
             author = "Michael Schneider",
             title = "‘The Masked Singer’ Reveals Identity of the Beach Ball: Here Are the Stars Under the Mask - Variety",
             description = "SPOILER ALERT: Do not read ahead if you have not watched “The Masked Singer” Season 6, Episode 8, “Giving Thanks,” which aired November 3 on Fox. Honey Boo Boo, we hardly knew you. Reality TV mother and daughter stars June Edith “Mama June” Shannon and Alana …",
-            publishedAt = "2021-11-04T02:00:00Z"
+            publishedAt = "2020-11-04T02:00:00Z"
         ),
         NewsData(
             7,
@@ -69,10 +73,60 @@ object MockData {
             author = "CBSBoston.com Staff",
             title = "Principal Beaten Unconscious At Dorchester School; Classes Canceled Thursday - CBS Boston",
             description = "Principal Patricia Lampron and another employee were assaulted at Henderson Upper Campus during dismissal on Wednesday.",
-            publishedAt = "2021-11-04T01:55:00Z"
+            publishedAt = "2022-06-04T01:55:00Z"
         ))
 
     fun getNews(id: Int?): NewsData{
         return topNewsList.first{it.id === id}
+    }
+
+    fun Date.getTimeAgo(): String {
+        val calendar = Calendar.getInstance()
+        calendar.time = this
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val currentCalendar = Calendar.getInstance()
+
+        val currentYear = currentCalendar.get(Calendar.YEAR)
+        val currentMonth = currentCalendar.get(Calendar.MONTH)
+        val currentDay = currentCalendar.get(Calendar.DAY_OF_MONTH)
+        val currentHour = currentCalendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = currentCalendar.get(Calendar.MINUTE)
+
+        return if (year < currentYear) {
+            val interval = currentYear - year
+            if (interval == 1) "$interval year ago" else "$interval years ago"
+        } else if (month < currentMonth) {
+            val interval = currentMonth - month
+            if (interval == 1) "$interval month ago" else "$interval months ago"
+        } else if (day < currentDay) {
+            val interval = currentDay - day
+            if (interval == 1) "$interval day ago" else "$interval days ago"
+        } else if (hour < currentHour) {
+            val interval = currentHour - hour
+            if (interval == 1) "$interval hour ago" else "$interval hours ago"
+        } else if (minute < currentMinute) {
+            val interval = currentMinute - minute
+            if (interval == 1) "$interval minute ago" else "$interval minutes ago"
+        } else {
+            "a moment ago"
+        }
+    }
+
+
+    fun stringToDate(publishedAt: String): Date {
+        val date =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssxx", Locale.ENGLISH).parse(publishedAt)
+            } else {
+                java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssxx", Locale.ENGLISH).parse(publishedAt)
+            }
+        Log.d("published","$date")
+        return date
     }
 }
