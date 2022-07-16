@@ -1,5 +1,6 @@
 package com.example.newsapp.ui
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
@@ -12,6 +13,7 @@ import com.example.newsapp.BottomMenuScreen
 import com.example.newsapp.components.BottomMenu
 import com.example.newsapp.models.MockData
 import com.example.newsapp.models.NewsData
+import com.example.newsapp.network.NewsManager
 import com.example.newsapp.ui.screen.Categories
 import com.example.newsapp.ui.screen.DetailScreen
 import com.example.newsapp.ui.screen.Sources
@@ -37,7 +39,14 @@ fun MainScreen(navController: NavHostController, scrollState: ScrollState){
 
 
 @Composable
-fun Navigation(navController: NavHostController, scrollState: ScrollState){
+fun Navigation(navController: NavHostController,
+               scrollState: ScrollState,
+               newsManager: NewsManager = NewsManager()
+){
+
+    val articles = newsManager.newsResponse.value.articles
+    Log.d("articles", "${articles}")
+
     NavHost(navController = navController, startDestination = "TopNews"){
 
         bottomNavigation(navController)
