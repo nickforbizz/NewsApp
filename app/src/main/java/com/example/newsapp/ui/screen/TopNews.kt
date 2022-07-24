@@ -13,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,16 +27,22 @@ import com.example.newsapp.models.MockData.getTimeAgo
 
 
 import com.example.newsapp.models.NewsData
+import com.example.newsapp.models.TopNewsArticle
+import com.skydoves.landscapist.coil.CoilImage
+import com.example.newsapp.R
+
 
 @Composable
-fun TopNews(navController: NavController){
+fun TopNews(navController: NavController, articles: List<TopNewsArticle>){
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Top News", fontWeight = FontWeight.SemiBold)
 
         LazyColumn{
-            items(MockData.topNewsList){
-                item -> TopNewsItem(newsdata = item, onNewsClick = {
-                    navController.navigate("DetailScreen/${item.id}")
+            items(articles.size){
+                index -> TopNewsItem(
+                    articles[index], onNewsClick = {
+                    navController.navigate("DetailScreen/${index}"
+                    )
             })
             }
         }
@@ -44,7 +52,7 @@ fun TopNews(navController: NavController){
 
 
 @Composable
-fun TopNewsItem(newsdata: NewsData, onNewsClick: ()->Unit ={}){
+fun TopNewsItem(article: TopNewsArticle, onNewsClick: ()->Unit ={}){
 
     Box(modifier = Modifier
         .height(200.dp)
@@ -52,16 +60,21 @@ fun TopNewsItem(newsdata: NewsData, onNewsClick: ()->Unit ={}){
         .clickable {
             onNewsClick()
         }){
-        Image(painter = painterResource(id = newsdata.image),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds)
+
+        CoilImage(
+            imageModel = article.urlToImage,
+            contentScale = ContentScale.Crop,
+            error = ImageBitmap.imageResource(R.drawable.breaking_news),
+            placeHolder = ImageBitmap.imageResource(R.drawable.breaking_news),
+        )
+
         Column(modifier = Modifier
             .wrapContentHeight()
             //.background(Brush.verticalGradient(0F to Color.Transparent, 4F to Color.Gray, 0.4F to Color.Gray))
             .padding(top = 15.dp, start = 15.dp), verticalArrangement = Arrangement.SpaceBetween) {
-            Text(text = MockData.stringToDate(newsdata.publishedAt).getTimeAgo() , color = Color.White, fontWeight = FontWeight.SemiBold)
+            Text(text = MockData.stringToDate(article.publishedAt!!).getTimeAgo() , color = Color.White, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.height(100.dp))
-            Text(text = newsdata.title, color = Color.White, fontWeight = FontWeight.SemiBold)
+            Text(text = article.title!!, color = Color.White, fontWeight = FontWeight.SemiBold)
         }
     }
 }
@@ -69,5 +82,13 @@ fun TopNewsItem(newsdata: NewsData, onNewsClick: ()->Unit ={}){
 @Preview(showBackground = true)
 @Composable
 fun TopNewsPreview(){
-    TopNews(rememberNavController())
+    TopNewsItem(
+        TopNewsArticle(
+        author = "Not available",
+        title = "'You are not alone': EU Parliament delegation tells Taiwan on first official visit - Reuters",
+        description =
+        "The European Parliament's first official delegation to Taiwan said on Thursday the diplomatically isolated " +
+                "island is not alone and called for bolder actions to strengthen EU-Taiwan ties as Taipei faces rising pressure from Beijing.",
+        publishedAt = "2021-11-04T03:37:00Z"
+    ))
 }
