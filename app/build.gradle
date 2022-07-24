@@ -55,6 +55,7 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
 
+    implementation "com.github.skydoves:landscapist-coil:1.4.1"
 
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.9.3"

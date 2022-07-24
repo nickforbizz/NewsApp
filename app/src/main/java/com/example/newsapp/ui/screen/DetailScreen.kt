@@ -16,8 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,9 +31,11 @@ import com.example.newsapp.R
 import com.example.newsapp.models.MockData
 import com.example.newsapp.models.MockData.getTimeAgo
 import com.example.newsapp.models.NewsData
+import com.example.newsapp.models.TopNewsArticle
+import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun DetailScreen(navController: NavController, newsData: NewsData, scrollState: ScrollState){
+fun DetailScreen(navController: NavController, article: TopNewsArticle, scrollState: ScrollState){
     
     
     Scaffold(topBar = {
@@ -42,19 +47,23 @@ fun DetailScreen(navController: NavController, newsData: NewsData, scrollState: 
             .verticalScroll(scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
 //            Text(text = "Details Screen", fontWeight = FontWeight.SemiBold)
 
-
-            Image(painter = painterResource(id = newsData.image), contentDescription = "")
+            CoilImage(
+                imageModel = article.urlToImage,
+                contentScale = ContentScale.Crop,
+                error = ImageBitmap.imageResource(R.drawable.breaking_news),
+                placeHolder = ImageBitmap.imageResource(R.drawable.breaking_news),
+            )
 
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                infoWithIcon(Icons.Default.Edit, newsData.author)
-                infoWithIcon(Icons.Default.DateRange, info =  MockData.stringToDate(newsData.publishedAt).getTimeAgo())
+                infoWithIcon(Icons.Default.Edit, article.author?:"N/A")
+                infoWithIcon(Icons.Default.DateRange, info =  MockData.stringToDate(article.publishedAt!!).getTimeAgo())
 
             }
 
-            Text(text = newsData.title, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
-            Text(text = newsData.description, modifier = Modifier.padding(top = 15.dp, bottom = 5.dp))
+            Text(text = article.title?:"N/A", fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 5.dp, bottom = 5.dp))
+            Text(text = article.description!!, modifier = Modifier.padding(top = 15.dp, bottom = 5.dp))
 
             Divider(
                 color = Color.Gray,
@@ -106,9 +115,7 @@ fun infoWithIcon(icon: ImageVector, info: String){
 @Composable
 fun DetailScreenPreview(){
     DetailScreen(rememberNavController(),
-        NewsData(
-            3,
-            R.drawable.reuters,
+        TopNewsArticle(
             author = "Not available",
             title = "'You are not alone': EU Parliament delegation tells Taiwan on first official visit - Reuters",
             description =
