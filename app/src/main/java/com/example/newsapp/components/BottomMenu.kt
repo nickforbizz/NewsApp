@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.BottomMenuScreen
 import com.example.newsapp.R
 
@@ -20,8 +21,7 @@ fun BottomMenu(navController: NavController){
         BottomMenuScreen.Categories,
         BottomMenuScreen.Sources,
     )
-    
-    
+
     BottomNavigation(contentColor = colorResource(id = R.color.white)) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
