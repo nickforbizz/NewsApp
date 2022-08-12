@@ -49,6 +49,7 @@ fun Navigation(navController: NavHostController,
                 paddingValues: PaddingValues
 ){
 
+
     val articles = newsManager.newsResponse.value.articles
     Log.d("articles", "${articles}")
 
@@ -82,8 +83,12 @@ fun NavGraphBuilder.bottomNavigation(navController: NavController, articles: Lis
     }
 
     composable(BottomMenuScreen.Categories.route){
+//        newsManager.onSelectedCategoryChanged("business")
+//        newsManager.getArticlesByCategory("business")
+
         Categories(newsManager = newsManager, onFetchCategory = {
             newsManager.onSelectedCategoryChanged(it)
+//            newsManager.getArticlesByCategory(it)
         })
     }
 
