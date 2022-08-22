@@ -13,20 +13,20 @@ sealed class BottomMenuScreen(
 ){
 
     object  TopNews: BottomMenuScreen(
-        route = "top news",
+        route = "top_news",
+        title = "Top News",
         icon= Icons.Outlined.Home,
-        title = "Top News"
     )
 
     object  Categories: BottomMenuScreen(
         route = "categories",
+        title = "Categories",
         icon= Icons.Outlined.Category,
-        title = "Categories"
     )
 
     object  Sources: BottomMenuScreen(
         route = "sources",
+        title = "Sources",
         icon= Icons.Outlined.Source,
-        title = "Sources"
     )
 }

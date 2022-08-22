@@ -10,23 +10,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.BottomMenuScreen
+
 import com.example.newsapp.R
 
 @Composable
-fun BottomMenu(navController: NavController){
-    val bottomMenuItems = listOf(
+fun BottomMenu(navController:NavController) {
+    val menuItems = listOf(
         BottomMenuScreen.TopNews,
         BottomMenuScreen.Categories,
-        BottomMenuScreen.Sources,
+        BottomMenuScreen.Sources
     )
-
-    BottomNavigation(contentColor = colorResource(id = R.color.white)) {
+    BottomNavigation(contentColor = colorResource(id = R.color.white))
+    {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-
-        bottomMenuItems.forEach{
+        menuItems.forEach {
             BottomNavigationItem(
                 label = { Text(text = it.title) },
                 alwaysShowLabel = true,
@@ -34,17 +33,25 @@ fun BottomMenu(navController: NavController){
                 unselectedContentColor = Color.Gray,
                 selected = currentRoute == it.route,
                 onClick = {
-                    navController.navigate(it.route){
-                        navController.graph.startDestinationRoute?.let{
-                            route ->
-                            popUpTo(route){ saveState = true }
+                    navController.navigate(it.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
                         }
-                        launchSingleTop=true
-                        restoreState=true
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 },
-                icon = { Icon(imageVector = it.icon, contentDescription = it.title) }
-                ) 
+                icon = {
+                    Icon(
+                        imageVector = it.icon,
+                        contentDescription = it.title
+                    )
+                },
+
+                )
+
         }
     }
 }
