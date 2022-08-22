@@ -28,7 +28,7 @@ import com.example.newsapp.network.NewsManager
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun Categories(onFetchCategory: (String) -> Unit = {}, newsManager: NewsManager){
+fun Categories( newsManager: NewsManager, onFetchCategory: (String) -> Unit = {}){
     val tabItems = getAllArticlesCategory()
 
     Column{
@@ -55,7 +55,7 @@ fun CategoryTab(
     isSelected: Boolean = false,
     onFetchCategory: (String) -> Unit
 ){
-    val background = if (isSelected) colorResource(id = R.color.purple_500) else colorResource(id = R.color.gray)
+    val background = if (isSelected) colorResource(id = R.color.gray) else colorResource(id = R.color.purple_500)
     Surface(
         modifier = Modifier
             .padding(horizontal = 5.dp, vertical = 16.dp)

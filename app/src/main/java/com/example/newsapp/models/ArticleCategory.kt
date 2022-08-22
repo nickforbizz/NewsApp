@@ -4,12 +4,12 @@ import com.example.newsapp.models.ArticleCategory.*
 
 enum class ArticleCategory(val categoryName: String) {
     BUSINESS("BUSINESS"),
-    ENTERTAINMENT("entertainment"),
-    HEALTH("health"),
-    GENERAL("general"),
-    SCIENCE("science"),
-    SPORTS("sports"),
-    TECHNOLOGY("technology")
+    ENTERTAINMENT("ENTERTAINMENT"),
+    HEALTH("HEALTH"),
+    GENERAL("GENERAL"),
+    SCIENCE("SCIENCE"),
+    SPORTS("SPORTS"),
+    TECHNOLOGY("TECHNOLOGY")
 }
 
 
